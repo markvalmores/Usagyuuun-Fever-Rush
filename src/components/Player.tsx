@@ -26,13 +26,30 @@ export const Player = () => {
   const [isDead, setIsDead] = useState(false);
   const laneRef = useRef(lane);
   
-  const spriteTexture = useLoader(
-    TextureLoader,
-    "/api/proxy-image?url=" + encodeURIComponent("https://www.image2url.com/r2/default/images/1779095733873-cd2513d5-30be-409b-8d95-8bf3888aaf44.png"),
-    (loader) => {
-      loader.setCrossOrigin("anonymous");
-    }
-  );
+  const [spriteTexture, setSpriteTexture] = useState<any>(null);
+  useEffect(() => {
+    const loader = new TextureLoader();
+    loader.setCrossOrigin("anonymous");
+    loader.load(
+        "/api/proxy-image?url=" + encodeURIComponent("https://cdn.phototourl.com/free/2026-05-18-bb2380a7-c2b1-4952-a106-e7d0ac8eb0e7.png"),
+        (texture) => setSpriteTexture(texture),
+        undefined,
+        (err) => {
+            console.error("Failed to load player texture, using fallback", err);
+            // Fallback: create a dummy texture
+            const canvas = document.createElement('canvas');
+            canvas.width = 64;
+            canvas.height = 64;
+            const ctx = canvas.getContext('2d');
+            if (ctx) {
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, 64, 64);
+            }
+            const texture = new TextureLoader().load(canvas.toDataURL());
+            setSpriteTexture(texture);
+        }
+    );
+  }, []);
 
   useEffect(() => { laneRef.current = lane; }, [lane]);
   const prevLives = useRef(lives);
@@ -276,6 +293,8 @@ export const Player = () => {
         }
     }
   });
+
+  if (!spriteTexture) return null;
 
   return (
     <group name="playerNode" ref={groupRef} position={[0, 1, 5]}>

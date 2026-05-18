@@ -6,6 +6,7 @@ import {
   Bloom,
   ChromaticAberration,
 } from "@react-three/postprocessing";
+import { Html } from "@react-three/drei";
 import { Player } from "./Player";
 import { Corridor } from "./Environment";
 import { ObstacleManager } from "./ObstacleManager";
@@ -143,7 +144,7 @@ export const GameScene = () => {
           />
         )}
 
-        <Suspense fallback={null}>
+        <Suspense fallback={<Html center className="text-white text-2xl whitespace-nowrap">Loading...</Html>}>
           {colors?.backgroundImage && !isFeverMode && <BackgroundImage image={colors.backgroundImage} />}
           <Player />
           <Corridor colors={colors} />
