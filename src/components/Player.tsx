@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useFrame, useLoader } from "@react-three/fiber";
-import { TextureLoader, MathUtils, Group, Color } from "three";
+import { useFrame } from "@react-three/fiber";
+import { MathUtils, Group, Color } from "three";
 import { useGameStore } from "../store";
 import { playSound } from "../AudioManager";
 import { Trail } from "@react-three/drei";
@@ -21,11 +21,6 @@ export const Player = () => {
   const moveStartTime = useRef(0);
   const tiltRef = useRef(0);
   const hitStartTime = useRef(0);
-
-  const spriteTexture = useLoader(
-    TextureLoader,
-    "/api/proxy-image?url=" + encodeURIComponent("https://www.image2url.com/r2/default/images/1779095733873-cd2513d5-30be-409b-8d95-8bf3888aaf44.png"),
-  );
 
   const { isFeverMode, screen, speed, triggerFever, lives, loseLife, toggleAutoplay, lane, setLane } = useGameStore();
   const [isDead, setIsDead] = useState(false);
@@ -287,11 +282,12 @@ export const Player = () => {
         length={4}
         color={isFeverMode ? new Color(0xff00ff) : new Color(0x00ffff)}
         attenuation={(t) => t * t}
-        target={spriteRef}
+        target={groupRef}
       />
-      <sprite ref={spriteRef} scale={[2.5, 2.5, 1]} position={[0, 0.5, 0]}>
-        <spriteMaterial map={spriteTexture} />
-      </sprite>
+      <mesh ref={spriteRef} scale={[2.5, 2.5, 1]} position={[0, 0.5, 0]}>
+        <boxGeometry args={[1, 1, 1]} />
+        <meshBasicMaterial color="white" />
+      </mesh>
 
       {/* Fever Glow */}
       {isFeverMode && (
