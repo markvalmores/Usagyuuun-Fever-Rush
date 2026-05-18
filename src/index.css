@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+.game-container {
+  position: relative;
+  overflow: hidden;
+  margin: auto;
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
+}

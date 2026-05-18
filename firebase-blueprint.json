@@ -1,0 +1,23 @@
+{
+  "entities": {
+    "Score": {
+      "title": "Score Entry",
+      "description": "A high score entry on the leaderboard.",
+      "type": "object",
+      "properties": {
+        "playerName": { "type": "string", "description": "The name of the player." },
+        "score": { "type": "number", "description": "The score achieved." },
+        "distance": { "type": "number", "description": "Distance traveled." },
+        "timestamp": { "type": "string", "description": "When the score was achieved (server timestamp string representation is not quite standard in this schema but we know it's a timestamp)." },
+        "uid": { "type": "string", "description": "Firebase Anonymous Auth UID" }
+      },
+      "required": ["playerName", "score", "distance", "timestamp", "uid"]
+    }
+  },
+  "firestore": {
+    "/leaderboard/{scoreId}": {
+      "schema": { "$ref": "#/entities/Score" },
+      "description": "The global high score leaderboard."
+    }
+  }
+}

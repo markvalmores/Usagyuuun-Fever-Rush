@@ -1,0 +1,11 @@
+{
+  "name": "Usagyuuun Fever Rush",
+  "description": "An endless 3D runner game featuring Usagyuuun. Tilt the phone or use a gamepad/keyboard to dodge hospital hazards!",
+  "requestFramePermissions": [
+    "gyroscope",
+    "accelerometer"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
